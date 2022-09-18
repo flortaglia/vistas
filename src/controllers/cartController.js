@@ -46,7 +46,7 @@ const addProduct = async (req,res)=>{
         })
         
     }
-    carrito = await CarritoDao.update(carrito._id.toString(),carrito.productos)
+    carrito = await CarritoDao.update(carrito._id,carrito.productos)
     res.json(carrito)
 }
 const getUserCart = async (req, res)=>{ 
@@ -57,7 +57,9 @@ const getUserCart = async (req, res)=>{
     res.render('cart.hbs',{productos})
 }
 const deleteProductFromCart = async (req,res)=>{
+    console.log("hola")
     const id_prod=req.body._id
+    console.log(mongoose.Types.ObjectId.isValid(id_prod));
     console.log('id_prod');
     // const username = req.user.username
     const username = 'Pepe@mail.com';

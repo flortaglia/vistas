@@ -18,7 +18,7 @@
        
         <h3 style="margin:2rem 0;"> Ingrese sus datos:</h3>
 
-        <form id="formSignUp" action="/signup" method="post" >
+        <form id="login" onsubmit="process(event)" action="/signup" method="post" >
             
             mail: <input id="usernameInput" type="mail" name="username" class="input-group mb-3" placeholder="mail del usuario" value="Pepe@mail.com" required>
             pasword: <input id="passwordInput" type="text" name="password" class="input-group mb-3" placeholder="password del usuario" value="perz" required>   
@@ -28,6 +28,7 @@
            <div>
                 teléfono: <input id="phone" type="tel" name="phone" />
                         <input type="submit" class="btn btn-success my-3" value="Verify" />
+                <div class="alert alert-info" style="display: none;"></div>
             </div> 
             foto o avatar: <input type="file" name="image-2" class="input-group mb-3" > 
             <div class="form-group">
@@ -52,6 +53,19 @@
           utilsScript:
             "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
         });
+    </script>
+    <script>
+      const info = document.querySelector(".alert-info");
+
+      function process(event) {
+        event.preventDefault();
+        // phoneInput.getNumber()  convierte en código internacional
+        //https://www.twilio.com/blog/como-crear-entradas-internacionales-de-numeros-de-telefono-en-html-y-javascript
+        const phoneNumber = phoneInput.getNumber(); 
+
+        info.style.display = "";
+        info.innerHTML = `Phone number in E.164 format: <strong>${phoneNumber}</strong>`;
+      }
     </script>
     <script>
         function redireccionar(pagina) {

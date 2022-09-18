@@ -21,10 +21,8 @@ router.post('/carrito', postCarrito)
 router.delete('/carrito/:id', deleteCarrito )
 router.get('/carrito', listarCarritos)
 router.get('/carrito/:id/productos', verCarrito)
-
-
 router.post('/carrito/productos', addProduct);
-router.delete('/carrito/productos', deleteProductFromCart)
+router.delete('/carritos/productos', deleteProductFromCart)
 
 router.get('/cart', getUserCart)
 

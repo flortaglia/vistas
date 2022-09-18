@@ -1,19 +1,21 @@
 const {ContenedorMongo} = require("../../contenedores/contenedorMongo.js") ;
-const {ProductoDao} = require ('../daos/index.js') 
+// const { ProductoDaoMongo } = require("../productos/productoDaoMongo.js");
 const mongoose = require("mongoose") ;
+// Schema=mongoose.Schema;
 
 class CarritoDaoMongo extends ContenedorMongo {
   constructor() {
     super("carritos",new mongoose.Schema( {
       username: { type: String, require: true, max: 200, unique:true},
       timestamp: { type: String, required: true },
-      productos: [{_id:String,price:Number,title:String,cantidad:Number}],
-    //   type: Array, required: true },
+      productos: {type: Array, required: true }, 
+       // type: Array, ref: 'productos' },
+   
      }))
   }
 
   async newCart(username){
-    const doc = new this.collection({username:username, timestamp:Date.now(), products:[]})
+    const doc = new this.collection({username:username, timestamp:Date.now(), productos:[]})
     await doc.save() 
     return doc      
   }
