@@ -5,11 +5,11 @@ const authToken = process.env.TOKEN
 
 const client = twilio(accountSid, authToken)
 
-async function main() {
+module.exports = async function mainSms(to,body) {
    await client.messages.create({
-      body: 'Hola soy un SMS desde Node.js!',
+      body: body,
       from: '+16186020225',
-      to: '+5491165885070'
+      to: `+${to}`
     },(err, info)=>{
         if (err) {
             console.log(err)
@@ -18,4 +18,4 @@ async function main() {
         }
     })
 }
-main()
+

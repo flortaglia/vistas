@@ -1,4 +1,7 @@
 const {CarritoDao,ProductoDao} = require ('../daos/index.js') 
+const main = require('../nodemailer/mailAdmin.js')
+const mainSms = require('../twilio/sms.js')
+const mainWhatsapp = require('../twilio/whatsapp.js')
 
 const postCarrito = async (req, res)=>{
     const elemento = await CarritoDao.newCart(username)
@@ -25,8 +28,8 @@ const listarCarritos =  async (req, res) => {
 const addProduct = async (req,res)=>{
     const cantidad= req.body.cant || 1
     const id_prod=req.params.id
-    // const username = req.user.username
-    const username = 'Pepe@mail.com'
+    const username = req.user.username
+    // const username = 'Pepe@mail.com'
     let carrito = await CarritoDao.cartByUsername(username)
     if(!carrito) { carrito= await CarritoDao.newCart(username)}
     const indice = carrito.productos.findIndex( (prod)=> prod._id === id_prod)
@@ -51,11 +54,43 @@ const addProduct = async (req,res)=>{
 }
 
 const getUserCart = async (req, res)=>{ 
-     // const username = req.user.username
-     const username = 'Pepe@mail.com'
-     let carrito = await CarritoDao.cartByUsername(username)
-     const productos = carrito.productos
-    res.render('cart.hbs',{productos})
+    const username = req.user.username
+    let carrito = await CarritoDao.cartByUsername(username)
+    if(!carrito){
+        res.render('cart.hbs', false)
+    }else{
+        const productos = carrito.productos 
+        res.render('cart.hbs',{productos})
+    }
+    
+}
+
+
+function sendOrderEmail(user, body){
+    main(`Nuevo Pedido de ${user.name} - ${user.username}`, body)
+    
+}
+
+const cartCheckout = async (req, res)=>{
+    // console.log('req- metodo post-login',req.body)
+    
+    let user= req.user
+    let carrito = await CarritoDao.cartByUsername(user.username)
+    const productos = carrito.productos
+    res.render('mail.hbs',{productos,layout: null}, (error, html) => {
+        console.log(html)
+        sendOrderEmail(req.user, html)
+    })
+    const message= carrito.productos.map(producto=>
+        `PRODUCTO: ${producto.title} PRECIO UNIT.: ${producto.price} CANTIDAD: ${producto.cantidad}`  
+    )
+    console.log('username', )
+    mainWhatsapp(`Nuevo Pedido de ${user.name} - ${user.username}: ${message.join()}`)
+    
+    const recibido = `El Pedido se encuentra en proceso. Gracias por su compra`
+    mainSms(req.user.phone, recibido)
+    
+    res.redirect('/')
 }
 const deleteProductFromCart = async (req,res)=>{
     console.log("hola")
@@ -84,6 +119,7 @@ module.exports = {
     listarCarritos,
     addProduct,
     getUserCart,
-    deleteProductFromCart
+    deleteProductFromCart,
+    cartCheckout
 
 }

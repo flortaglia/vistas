@@ -5,7 +5,7 @@ const { getProductos, postProductos, getProductoId,
 
 const { postCarrito, deleteCarrito, 
     listarCarritos, verCarrito, addProduct,deleteProductFromCart,
-    getUserCart} = require('../controllers/cartController.js') 
+    getUserCart, cartCheckout} = require('../controllers/cartController.js') 
 
 //Rutas Productos
 router.get('/productos', getProductos)
@@ -20,11 +20,12 @@ router.delete('/productos/:id', deleteProduct )
 //Rutas Carrito
 router.post('/carrito', postCarrito) 
 router.delete('/carrito/:id', deleteCarrito )
-router.get('/carrito', listarCarritos)
-router.get('/carrito/:id/productos', verCarrito)
+// router.get('/carrito', listarCarritos)
+// router.get('/carrito/:id/productos', verCarrito)
 router.get('/carrito/productos/:id', addProduct);
 router.delete('/carritos/productos', deleteProductFromCart)
 
 router.get('/cart', getUserCart)
+router.get('/carrito/checkout', cartCheckout)
 
 module.exports = router 

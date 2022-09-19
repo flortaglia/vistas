@@ -2,7 +2,7 @@ const { createTransport } = require ('nodemailer');
 
 const TEST_MAIL = 'flortagliaferro@gmail.com'
 
-async function main(){
+module.exports = async function main(subject, html){
 
     const transporter = createTransport({
         service: 'gmail',
@@ -16,14 +16,15 @@ async function main(){
    const mailOptions = {
     from: 'Servidor Node.js',
     to: TEST_MAIL,
-    subject: `Nuevo Pedido de ${req.user.name} - ${req.user.username}`,
-    html: '<h1 style="color: blue;">Contenido de prueba desde <span style="color: green;">Node.js con Nodemailer</span></h1>',
+    subject: subject,
+    html: html,
     // attachments: [
     //     {
     //         path: new URL ("../public/img/carne-empa.webp",import.meta.url).pathname,
     //     }
     // ]
     };
+
     transporter.sendMail(mailOptions,(err, info)=>{
         if (err) {
             console.log(err)
@@ -34,4 +35,4 @@ async function main(){
 
 }
 
-main()
+

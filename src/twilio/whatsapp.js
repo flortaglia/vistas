@@ -5,9 +5,9 @@ const authToken = process.env.TOKEN
 
 const client = twilio(accountSid, authToken)
 
-async function main() {
+module.exports = async function mainWhatsapp(body) {
    await client.messages.create({
-      body: 'Hola soy un SMS desde Node.js!',
+      body: body,
       from: 'whatsapp:+14155238886',
       to: 'whatsapp:+5491165885070'
     },(err, info)=>{
@@ -18,4 +18,3 @@ async function main() {
         }
     })
 }
-main()

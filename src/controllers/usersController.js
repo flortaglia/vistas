@@ -1,5 +1,6 @@
 const {UsuarioDao} = require ('../daos/index.js') 
 const path = require( 'path')
+const main = require('../nodemailer/mailAdmin.js')
 
 const getHome = (req,res)=>{
     res.sendFile(path.join(__dirname, ".././public/home.html"));
@@ -40,6 +41,16 @@ const getSignup =(req, res)=>{
 const postSignup =  (req, res)=>{
     // console.log('req- metodo post-login',req.body)
     let user= req.user
+    main(`Nuevo Registro de ${req.user.name} - ${req.user.username}`, 
+    `<h1>Datos de Registro</h1>
+    <ul>
+        <li>E-mail: ${req.user.username} </li>
+        <li>Nombre: ${req.user.name} </li>
+        <li>Dirección: ${req.user.address} </li>
+        <li>Edad: ${req.user.age} </li>
+       <li>Teléfono: ${req.user.phone} </li>
+       <li>avatar: http://localhost:8080/image/${req.user.avatar}  </li>
+   </ul>`)
     console.log('usersignup', user)
     res.redirect('/')
 }

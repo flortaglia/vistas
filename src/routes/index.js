@@ -39,15 +39,7 @@ const upload = require ('../multer/loadFile.js')
   router.get('/logout', getLogout )
 
   module.exports = router 
-  // router.post('/signup', upload.single('image'),
-  //   (req, res)=>{
-  //     // console.log('req- metodo post-login',req.body)
-  //     const file=req.file
-  //     if(!file){console.log('Please upload file')}
-    
-  //     console.log('Ok upload file')
-  //   }
-  // )
+
 
   // const {faker}  =require( "@faker-js/faker");
 // faker.locale='es'
