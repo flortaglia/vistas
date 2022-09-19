@@ -76,9 +76,10 @@ const cartCheckout = async (req, res)=>{
     
     let user= req.user
     let carrito = await CarritoDao.cartByUsername(user.username)
+    console.log('carrito._id',carrito._id)
     const productos = carrito.productos
     res.render('mail.hbs',{productos,layout: null}, (error, html) => {
-        console.log(html)
+        
         sendOrderEmail(req.user, html)
     })
     const message= carrito.productos.map(producto=>
@@ -89,7 +90,7 @@ const cartCheckout = async (req, res)=>{
     
     const recibido = `El Pedido se encuentra en proceso. Gracias por su compra`
     mainSms(req.user.phone, recibido)
-    
+    await CarritoDao.deleteById(carrito._id)
     res.redirect('/')
 }
 const deleteProductFromCart = async (req,res)=>{

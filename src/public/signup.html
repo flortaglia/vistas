@@ -57,7 +57,14 @@
 
         const phoneNumber = phoneInput.getNumber();
         //****************************************************************
-        
+        // $.ajax({ type: "post",
+        //  url: "http:localhost:8080/phone", 
+        //  data: { phone:phoneNumber }, 
+        //  success: 
+        //  function(data) {  return data }, 
+        //  error: 
+        //  function(jqXHR, textStatus, err) { alert('text status '+textStatus+', err '+err) } });
+
         console.log(phoneNumber)
         info.style.display = "none";
         error.style.display = "none";

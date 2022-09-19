@@ -40,7 +40,7 @@ const upload = require ('../multer/loadFile.js')
 
   module.exports = router 
 
-
+  // router.post('/phone', (req,res)=>{ let phone=req.body.phone; console.log(phone)  })
   // const {faker}  =require( "@faker-js/faker");
 // faker.locale='es'
 // module.export = router.get ('/api/productos-test', (req,res)=>{

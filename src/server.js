@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const path = require( 'path') 
+const bodyParser = require('body-parser');
 const cookieParser = require( "cookie-parser");
 const {configChat} = require ('./socket/chat.js')
 const passport = require( 'passport');
@@ -12,26 +13,61 @@ const rutas = require( "./routes/api.js");
 const configSession = require( "./session/configSession.js");
 const { engine } = require('express-handlebars')
 const app = express()
+const compression = require ("compression")
+app.use(compression())
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const Handlebars = require('handlebars')
 
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
-//PUERTO CON YARGS  CL28
-const args = yargs
-        .alias({p:'puerto'})
-        .default({puerto:8080})
-        .argv
 
+//CLUSTER Y OS
+const cluster = require("cluster");
+const os = require("os");
+const cpus= os.cpus() //creo workers
+//PUERTO CON YARGS  CL30
+const args = yargs
+        .alias({p:'puerto', m: 'modo'})
+        .default({puerto:8080, modo:'fork'}) //variable modo agregada cluster  o fork (x default)
+        .argv
 
 app.use(configSession);
 //Inicializo PASSPORT
 app.use(passport.initialize());
 app.use(passport.session());
 initPassport(passport);
-app.use("/", routes);
-app.use('/api', rutas);
+
+//IF CLUSTER OR FORK?
+let expressServer = null
+
+if (args.modo =="cluster" && cluster.isPrimary) {
+  console.log("MODO CLUSTER")
+  cpus.map(() => {
+    cluster.fork();
+  });
+
+  cluster.on("exit", (worker) => {
+    console.log(`Worker ${worker.process.pid} died`);
+
+    cluster.fork();
+  });
+} else {
+
+  console.log("MODO FORK")
+  app.use("/", routes);
+  app.use('/api', rutas);
+  
+ 
+  expressServer = app.listen(process.env.PORT || 8080, (err) => {
+      if(err) {
+          console.log(`Se produjo un error al iniciar el servidor: ${err}`)
+      } else {
+          console.log(`Servidor escuchando puerto: ${process.env.PORT ||8080}`)
+      }
+  })
+ 
+}
 app.use(express.static(__dirname + '/public'))
 app.engine('hbs', 
     engine({
@@ -45,13 +81,5 @@ app.engine('hbs',
   
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, './public/views'))
-
-const expressServer = app.listen(args.puerto, (err) => {
-    if(err) {
-        console.log(`Se produjo un error al iniciar el servidor: ${err}`)
-    } else {
-        console.log(`Servidor escuchando puerto: ${args.puerto}`)
-    }
-})
 configChat(expressServer)
 

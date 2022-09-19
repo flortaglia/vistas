@@ -1,6 +1,6 @@
 const { createTransport } = require ('nodemailer');
 
-const TEST_MAIL = 'flortagliaferro@gmail.com'
+const TEST_MAIL = process.env.MAIL
 
 module.exports = async function main(subject, html){
 
