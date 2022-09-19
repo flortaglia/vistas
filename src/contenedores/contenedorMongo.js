@@ -1,6 +1,6 @@
 const mongoose =require("mongoose") ;
 const dbConfig = require('../config.js');
-//await ?????????????????????'
+
 mongoose.connect(dbConfig.url, {
   useNewUrlParser: true,
   useUnifiedTopology: true

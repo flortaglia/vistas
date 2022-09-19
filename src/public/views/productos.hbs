@@ -15,7 +15,7 @@
         <tbody>
             {{#each verProductos}}
 
-                <tr scope="row">
+                <tr scope="row" id={{this._id}}>
                      
                     <td>
                             {{this.title}} 
@@ -30,8 +30,8 @@
 
                     </td>
                     <td>
-                        <button class="btn btn-warning" >agregar</button>
-                       
+                        <a class="btn btn-warning" href="/api/carrito/productos/{{this._id}}">agregar</a>
+                                               
                     </td>
                      
                     

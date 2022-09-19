@@ -22,18 +22,8 @@ const getLogin =(req, res)=>{
 
 const getUserInfo = (req, res)=>{ 
     const {username, name, address, age, phone, avatar} = req.user
-    // const data = `
-    // <h1>Información</h1>
-    // <ul>
-    //     <li>E-mail: ${req.user.username} </li>
-    //     <li>Nombre: ${req.user.name} </li>
-    //     <li>Dirección: ${req.user.address} </li>
-    //     <li>Edad: ${req.user.age} </li>
-    //     <li>Teléfono: ${req.user.phone} </li>
-    //     <li>Avatar: ${req.user.avatar}</li>
-    // </ul>` ;
     res.render('info',{username, name, address, age, phone, avatar})
-    // res.send(data)
+    
 }
 const postLogin =(req, res)=>{
     let user= req.username

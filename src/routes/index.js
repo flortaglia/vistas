@@ -3,7 +3,8 @@ const router= Router();
 const passport = require ('passport') 
 const { getHome, getHomeAdmin, getLogin, getUserInfo,
        postLogin, getFailLogin, getSignup, postSignup, 
-       getFailSignup, getLogout} = require('../controllers/usersController.js') 
+       getFailSignup, getLogout} = require('../controllers/usersController.js')
+const upload = require ('../multer/loadFile.js')
 
 //INICIO PASSPORT
 
@@ -30,7 +31,7 @@ const { getHome, getHomeAdmin, getLogin, getUserInfo,
   router.get('/fail-login', getFailLogin)
   ///////           SIGNUP            ///////////////////
   router.get('/signup',getSignup)
-  router.post('/signup',passport.authenticate('signup',
+  router.post('/signup',upload.single('image'),passport.authenticate('signup',
     { failureRedirect: '/fail-signup',failureMessage: true}),
     postSignup
   )

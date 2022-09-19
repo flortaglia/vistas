@@ -17,8 +17,8 @@
     <div class="container">
        
         <h3 style="margin:2rem 0;"> Ingrese sus datos:</h3>
-
-        <form id="login" onsubmit="process(event)" action="/signup" method="post" >
+        <!-- onsubmit="process(event)" -->
+        <form id="login" enctype='multipart/form-data' action="/signup" method="post" >
             
             mail: <input id="usernameInput" type="mail" name="username" class="input-group mb-3" placeholder="mail del usuario" value="Pepe@mail.com" required>
             pasword: <input id="passwordInput" type="text" name="password" class="input-group mb-3" placeholder="password del usuario" value="perz" required>   
@@ -30,7 +30,7 @@
                         <input type="submit" class="btn btn-success my-3" value="Verify" />
                 <div class="alert alert-info" style="display: none;"></div>
             </div> 
-            foto o avatar: <input type="file" name="image-2" class="input-group mb-3" > 
+            foto o avatar: <input type="file" name="image" class="input-group mb-3" > 
             <div class="form-group">
                 <input id="SignupBtn" class="btn btn-success my-3" type="submit" value="Registrarse">
             </div>

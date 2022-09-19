@@ -1,7 +1,6 @@
 const {CarritoDao,ProductoDao} = require ('../daos/index.js') 
 
 const postCarrito = async (req, res)=>{
-
     const elemento = await CarritoDao.newCart(username)
     res.json(elemento)
 }
@@ -24,8 +23,8 @@ const listarCarritos =  async (req, res) => {
     res.json(verCarritos)
 }
 const addProduct = async (req,res)=>{
-    const cantidad= req.body.cant
-    const id_prod=req.body._id
+    const cantidad= req.body.cant || 1
+    const id_prod=req.params.id
     // const username = req.user.username
     const username = 'Pepe@mail.com'
     let carrito = await CarritoDao.cartByUsername(username)
@@ -47,8 +46,10 @@ const addProduct = async (req,res)=>{
         
     }
     carrito = await CarritoDao.update(carrito._id,carrito.productos)
-    res.json(carrito)
+    //res.json(carrito)
+    res.redirect('/api/productos')
 }
+
 const getUserCart = async (req, res)=>{ 
      // const username = req.user.username
      const username = 'Pepe@mail.com'
