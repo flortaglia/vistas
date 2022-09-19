@@ -5,6 +5,14 @@ const { getHome, getHomeAdmin, getLogin, getUserInfo,
        postLogin, getFailLogin, getSignup, postSignup, 
        getFailSignup, getLogout} = require('../controllers/usersController.js')
 const upload = require ('../multer/loadFile.js')
+const logger = require('../utils/logger.js')
+
+//middleware a nivel enrutador, se ejecutará en cada req del route
+router.use(function (req, res, next){
+  const { url, method } = req;
+  logger.info(`Método ${method} URL ${url} recibida`);
+  next()
+})
 
 //INICIO PASSPORT
 

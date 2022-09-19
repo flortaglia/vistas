@@ -4,6 +4,7 @@ const path = require( 'path')
 const bodyParser = require('body-parser');
 const cookieParser = require( "cookie-parser");
 const {configChat} = require ('./socket/chat.js')
+const logger = require('./utils/logger.js')
 const passport = require( 'passport');
 const yargs = require('yargs/yargs')(process.argv.slice(2)) //libreria YARGS
 const initPassport = require( './passport/init.js');
@@ -83,3 +84,8 @@ app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, './public/views'))
 configChat(expressServer)
 
+app.use((req,res,next)=>{
+  const { url, method } = req;
+  logger.warn(`Método ${method} URL ${url} inexistente`);
+  
+} )
