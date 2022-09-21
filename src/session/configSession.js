@@ -14,6 +14,6 @@ module.exports = session({
     saveUninitialized: false,
     rolling: true, // Re initialization of the time in every request
     cookie: {
-      maxAge: 60000, //CHANGE TO 1 MIN=> 1*1000*60
+      maxAge: 300000, //CHANGE TO 5 MIN=> 1*1000*60
     },
   })

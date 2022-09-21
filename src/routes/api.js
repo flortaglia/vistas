@@ -22,7 +22,7 @@ router.post('/carrito', postCarrito)
 router.delete('/carrito/:id', deleteCarrito )
 // router.get('/carrito', listarCarritos)
 // router.get('/carrito/:id/productos', verCarrito)
-router.get('/carrito/productos/:id', addProduct);
+router.get('/carrito/productos/:id', addProduct); //////
 router.get('/carrito/deleteproducto/:id', deleteProductFromCart)
 // router.delete('/carrito/deleteproducto', deleteProductFromCart) xq x ahora uso link
 

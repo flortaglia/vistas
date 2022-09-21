@@ -54,6 +54,7 @@ const addProduct = async (req,res)=>{
     carrito = await CarritoDao.update(carrito._id,carrito.productos)
 
     res.redirect('/api/productos')
+    //res.json(carrito)
 }
 
 const getUserCart = async (req, res)=>{ 
