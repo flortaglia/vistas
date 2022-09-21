@@ -28,7 +28,7 @@ const getUserInfo = (req, res)=>{
 }
 const postLogin =(req, res)=>{
     let user= req.username
-    res.redirect('/')
+    res.redirect('/api/productos')
 }
 const getFailLogin =(req, res)=>{
     // console.log('req.session.messages',req.session.messages)

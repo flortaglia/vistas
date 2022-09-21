@@ -32,7 +32,7 @@ const args = yargs
         .alias({p:'puerto', m: 'modo'})
         .default({puerto:8080, modo:'fork'}) //variable modo agregada cluster  o fork (x default)
         .argv
-
+console.log('args.modo', args.modo)
 app.use(configSession);
 //Inicializo PASSPORT
 app.use(passport.initialize());

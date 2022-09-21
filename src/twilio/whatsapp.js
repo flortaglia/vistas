@@ -3,7 +3,7 @@ const twilio = require ('twilio')
 const accountSid = process.env.SID 
 const authToken = process.env.TOKEN
 const TEST_CEL = process.env.CEL
-console.log(TEST_CEL)
+
 
 const client = twilio(accountSid, authToken)
 
