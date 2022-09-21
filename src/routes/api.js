@@ -14,7 +14,7 @@ router.get('/productos/:id', getProductoId)
 router.post('/productos', postProductos)
 router.put('/productos/:id', putProduct)
 router.delete('/productos/:id', deleteProduct )
-// router.get('/productos', mostrarForm)
+// router.get('/productos', mostrarForm) 
 
 
 //Rutas Carrito
@@ -23,7 +23,8 @@ router.delete('/carrito/:id', deleteCarrito )
 // router.get('/carrito', listarCarritos)
 // router.get('/carrito/:id/productos', verCarrito)
 router.get('/carrito/productos/:id', addProduct);
-router.delete('/carritos/productos', deleteProductFromCart)
+router.get('/carrito/deleteproducto/:id', deleteProductFromCart)
+// router.delete('/carrito/deleteproducto', deleteProductFromCart) xq x ahora uso link
 
 router.get('/cart', getUserCart)
 router.get('/carrito/checkout', cartCheckout)

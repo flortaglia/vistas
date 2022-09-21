@@ -13,7 +13,7 @@
         <tbody>
             {{#each productos}}
 
-                <tr scope="row">
+                <tr scope="row" >
                     <td>
                             {{title}} 
                     </td>
@@ -23,7 +23,9 @@
                     <td>
                             {{cantidad}}   
                     </td>
-                    
+                    <td>
+                    <a href="/api/carrito/deleteproducto/{{_id}}"  class="btn btn-primary" >Eliminar</a> 
+                    </td>
                 </tr>  
             
             {{/each}}

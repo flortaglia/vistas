@@ -3,7 +3,7 @@ const {ProductoDao} = require ('../daos/index.js')
 const getProductos = async (req, res) => {
     const verProductos = await ProductoDao.getAll()
     // const {username, name, address, age, phone, avatar} = req.user
-    console.log('verProductos', verProductos)
+    // console.log('verProductos', verProductos)
     // res.json(verProductos)
     res.render('productos.hbs',{verProductos})
 }

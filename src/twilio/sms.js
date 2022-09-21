@@ -14,7 +14,7 @@ module.exports = async function mainSms(to,body) {
         if (err) {
             console.log(err)
         } else {
-            console.log('Email sent: ', info);
+            console.log('sms sent: ', info);
         }
     })
 }

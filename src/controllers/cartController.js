@@ -3,6 +3,8 @@ const main = require('../nodemailer/mailAdmin.js')
 const mainSms = require('../twilio/sms.js')
 const mainWhatsapp = require('../twilio/whatsapp.js')
 
+
+
 const postCarrito = async (req, res)=>{
     const elemento = await CarritoDao.newCart(username)
     res.json(elemento)
@@ -29,19 +31,20 @@ const addProduct = async (req,res)=>{
     const cantidad= req.body.cant || 1
     const id_prod=req.params.id
     const username = req.user.username
-    // const username = 'Pepe@mail.com'
     let carrito = await CarritoDao.cartByUsername(username)
     if(!carrito) { carrito= await CarritoDao.newCart(username)}
-    const indice = carrito.productos.findIndex( (prod)=> prod._id === id_prod)
+    const indice = carrito.productos.findIndex( (prod)=> prod._id.toString() === id_prod)
     console.log(indice)
     if(indice >= 0){
 
         carrito.productos[indice].cantidad += cantidad
     }else{
-        const producto = await ProductoDao.getById(id_prod)
+        let producto = await ProductoDao.getById(id_prod)
+        const quantity = {cantidad : cantidad}
         
+        console.log('producto cantidad',producto)
         carrito.productos.push({
-            _id: producto._id.toString(),
+            _id:producto._id,
             title:producto.title,
             price:producto.price,
             cantidad
@@ -49,7 +52,7 @@ const addProduct = async (req,res)=>{
         
     }
     carrito = await CarritoDao.update(carrito._id,carrito.productos)
-    //res.json(carrito)
+
     res.redirect('/api/productos')
 }
 
@@ -94,23 +97,20 @@ const cartCheckout = async (req, res)=>{
     res.redirect('/')
 }
 const deleteProductFromCart = async (req,res)=>{
-    console.log("hola")
-    const id_prod=req.body._id
-    console.log(mongoose.Types.ObjectId.isValid(id_prod));
-    console.log('id_prod');
-    // const username = req.user.username
-    const username = 'Pepe@mail.com';
-    console.log('username',username);
+    
+    const id_prod=req.params.id
+        console.log('id_prod',id_prod);
+    const username = req.user.username
+        console.log('username',username);
     let carrito = await CarritoDao.cartByUsername(username)
-   console.log('carrito delete',carrito)
     if(!carrito) { 
         console.log('carrito no existe') 
         return res.json()
     }
-    carrito.productos = carrito.productos.filter((prod)=>prod._id !== id_prod)
-    console.log('carrito YA delete',carrito)
-    carrito = await CarritoDao.update(carrito._id.toString(),carrito.productos)
-    res.json(carrito)
+    carrito.productos = carrito.productos.filter((prod)=>prod._id.toString() !== id_prod)
+    carrito = await CarritoDao.update(carrito._id,carrito.productos)
+    
+    res.redirect('/api/cart') 
 }
 
 module.exports = {

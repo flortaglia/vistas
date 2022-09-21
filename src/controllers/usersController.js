@@ -127,6 +127,10 @@ const putUser = async (req, res) => {
 const deleteUser = async (req, res) => {
     const id = req.params.id
     if(!id){return res.json({ error: "El parámetro no es un número o el id no existe" })}
+    ////////HACER  más adelante agregar borrar usuario y carrito de usuario////////////////////!?!?!
+    /////const usuario = await UsuarioDao.getById(id)
+    /////CREAR    const carrito= await CarritoDao.getByUsername(usuario.username)
+    //// await CarritoDao.deleteById(carrito._id.toString())
     await UsuarioDao.deleteById(id)
     res.json(await UsuarioDao.getAll())
 }
