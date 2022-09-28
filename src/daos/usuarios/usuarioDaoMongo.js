@@ -1,4 +1,4 @@
-const {ContenedorMongo} = require("../../contenedores/contenedorMongo.js") ;
+const {ContenedorMongo} = require("../conexMongo/contenedorMongo.js") ;
 const mongoose = require("mongoose") ;
 
 class UsuarioDaoMongo extends ContenedorMongo {
