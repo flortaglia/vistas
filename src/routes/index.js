@@ -28,7 +28,7 @@ router.use(function (req, res, next){
   //INDEX
   router.get ('/', authMiddleware, getHome)
   //HOME ADMIN
-  router.get('/home',authMiddleware, getHomeAdmin)
+  // router.get('/home',authMiddleware, getHomeAdmin)
   ////////          LOGIN         ////////
   router.get('/login', getLogin)
   router.get('/info', getUserInfo)
